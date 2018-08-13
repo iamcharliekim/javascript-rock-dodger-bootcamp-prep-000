@@ -1,21 +1,16 @@
 /**
  * Don't change these constants!
  */
-const DODGER = document.getElementById('dodger')
-const GAME = document.getElementById('game')
-const GAME_HEIGHT = 400
-const GAME_WIDTH = 400
-const LEFT_ARROW = 37 // use e.which!
-const RIGHT_ARROW = 39 // use e.which!
-const ROCKS = []
-const START = document.getElementById('start')
+const DODGER = document.getElementById('dodger');
+const GAME = document.getElementById('game');
+const GAME_HEIGHT = 400;
+const GAME_WIDTH = 400;
+const LEFT_ARROW = 37 
+const RIGHT_ARROW = 39 // use e.which!;
+const ROCKS = [];
+const START = document.getElementById('start');
 
 var gameInterval = null
-
-/**
- * Be aware of what's above this line,
- * but all of your work should happen below.
- */
 
 function checkCollision(rock) {
   const top = positionToInteger(rock.style.top);
@@ -39,20 +34,13 @@ function checkCollision(rock) {
 }
 
 function createRock(x) {
-  const rock = document.createElement('div')
+  const rock = document.createElement('div');
+  rock.className = 'rock';
+  rock.style.left = `${x}px`;
+  var top = 0;
+  rock.style.top = top;
+  GAME.appendChild(rock);
 
-  rock.className = 'rock'
-  rock.style.left = `${x}px`
-
-  // Hmmm, why would we have used `var` here?
-  var top = 0
-
-  rock.style.top = top
-
-   
-   GAME.appendChild(rock);
-
-  
   function moveRock() {
     rock.style.top = `${top += 2}px`;
       if (top < 400){
@@ -69,21 +57,11 @@ function createRock(x) {
   }
   
 window.requestAnimationFrame(moveRock);
-  // We should kick of the animation of the rock around here
-
-  // Add the rock to ROCKS so that we can remove all rocks
-  // when there's a collision
-  ROCKS.push(rock)
-
-  // Finally, return the rock element you've created
-  return rock 
+ 
+  ROCKS.push(rock);
+  return rock;
 }
-/**
- * End the game by clearing `gameInterval`,
- * removing all ROCKS from the DOM,
- * and removing the `moveDodger` event listener.
- * Finally, alert "YOU LOSE!" to the player.
- */
+
 function endGame() {
   clearInterval(gameInterval);
   for (i = 0; i <ROCKS.length; i++){
@@ -96,8 +74,8 @@ function endGame() {
 function moveDodger(e) {
   const code = e.which;
   if ([LEFT_ARROW, RIGHT_ARROW].indexOf(code) > -1) {
-    e.preventDefault()
-    e.stopPropagation()
+    e.preventDefault();
+    e.stopPropagation();
   }
   if (code === 37){
     moveDodgerLeft();
@@ -111,18 +89,18 @@ function moveDodgerLeft() {
   window.requestAnimationFrame(function (){
   var left = positionToInteger(DODGER.style.left);
     if (left > 0) {
-    DODGER.style.left = `${left - 4}px`
+    DODGER.style.left = `${left - 4}px`;
   }
-})
+});
 }
 
 function moveDodgerRight() {
   window.requestAnimationFrame(function (){
   var left = positionToInteger(DODGER.style.left);
    if (left < 360) {
-    DODGER.style.left = `${left + 4}px`
+    DODGER.style.left = `${left + 4}px`;
   }
-})
+});
 }
 
 /**
